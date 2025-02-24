@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Gyroscope, Accelerometer, Magnetometer } from "expo-sensors";
+import testTypes from '../assets/tests.json';
 
 const LoggingScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [dataLog, setDataLog] = useState([]);
   const router = useRouter();
+  const { testId } = useLocalSearchParams();
   let recordingTimer;
+
+  const test = testTypes.tests.find(t => t.test_id === testId);
 
   useEffect(() => {
     let accelerometerSubscription, gyroscopeSubscription, magnetometerSubscription;
@@ -31,8 +35,8 @@ const LoggingScreen = () => {
         setDataLog((prevLog) => [...prevLog, { timestamp: Date.now(), type: "Magnetometer", ...data }]);
       });
 
-      // Stop automatically after 6 minutes
-      recordingTimer = setTimeout(() => stopRecording(), 360000);
+      // Stop automatically after the test duration
+      recordingTimer = setTimeout(() => stopRecording(), parseInt(test.test_duration));
     }
 
     return () => {
@@ -45,7 +49,10 @@ const LoggingScreen = () => {
 
   const stopRecording = () => {
     setIsRecording(false);
-    router.push({ pathname: "/results", params: { data: JSON.stringify(dataLog) } });
+    setDataLog((prevLog) => {
+      router.push({ pathname: "/results", params: { data: JSON.stringify(prevLog) } });
+      return prevLog;
+    });
   };
 
   const toggleRecording = () => {
@@ -58,6 +65,10 @@ const LoggingScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text>Test ID: {testId}</Text>
+      <Text>Test Name: {test.test_name}</Text>
+      <Text>Instructions: {test.test_instructions}</Text>
+      <Text>Duration: {parseInt(test.test_duration) / 60000} Minutes</Text>
       <Button title={isRecording ? "Stop" : "Start"} onPress={toggleRecording} />
       <Text style={styles.text}>Logged Entries: {dataLog.length}</Text>
     </View>

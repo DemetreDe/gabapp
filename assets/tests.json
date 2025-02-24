@@ -1,0 +1,22 @@
+{
+    "tests" : [
+        {
+            "test_id" : "1",
+            "test_name" : "Movement Test",
+            "test_instructions" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rutrum tortor ac sapien rhoncus feugiat. Fusce quis accumsan erat, in consectetur est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam felis ante, sagittis sit amet nibh sit amet, pharetra congue ex.",
+            "test_duration" : "360000"
+        },
+        {
+            "test_id" : "2",
+            "test_name" : "Standing Test",
+            "test_instructions" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rutrum tortor ac sapien rhoncus feugiat. Fusce quis accumsan erat, in consectetur est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam felis ante, sagittis sit amet nibh sit amet, pharetra congue ex.",
+            "test_duration" : "180000"
+        },
+        {
+            "test_id" : "3",
+            "test_name" : "Debug Test",
+            "test_instructions" : "Dummy test for debugging purposes",
+            "test_duration" : "3000"
+        }
+    ]
+}
