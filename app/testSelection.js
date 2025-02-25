@@ -1,10 +1,18 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useAuth } from './AuthContext';
 import testTypes from '../assets/tests.json';
 
 const TestSelectionScreen = () => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.push('/');
+    return null;
+  }
+
 
   const handleTestSelection = (testId) => {
     router.push({ pathname: '/logging', params: { testId } });

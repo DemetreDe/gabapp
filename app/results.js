@@ -1,7 +1,16 @@
 import { useLocalSearchParams } from "expo-router";
+import { useAuth } from './AuthContext';
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 
 const ResultsScreen = () => {
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.push('/');
+    return null;
+  }
+
   const { data } = useLocalSearchParams();
   const parsedData = data ? JSON.parse(data) : [];
 

@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Gyroscope, Accelerometer, Magnetometer } from "expo-sensors";
+import { useAuth } from './AuthContext';
 import testTypes from '../assets/tests.json';
 
 const LoggingScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [dataLog, setDataLog] = useState([]);
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.push('/');
+    return null;
+  }
   const { testId } = useLocalSearchParams();
   let recordingTimer;
 
